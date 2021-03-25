@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+@using Newtonsoft.Json
 @{
     ViewData["Title"] = "Home page";
 }
@@ -44,4 +45,6 @@
             </form>
         </div>
     </div>
+    
+    <span id="categoryInfo" class="d-none">@JsonConvert.SerializeObject(TimeTrackingWorkbookService.GetCategories())</span>
 </div>
