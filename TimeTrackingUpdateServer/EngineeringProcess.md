@@ -71,29 +71,24 @@ stuff at the top the same):
                     <div class="form-group row">
                         <label for="category">Category</label>
                         <select id="category" class="form-control">
-                            <option value="none selected" selected>Select...</option>
-                            <option value="placeholder1">Placeholder 1</option>
-                            <option value="placeholder2">Placeholder 2</option>
-                            <option value="placeholder3">Placeholder 3</option>
+                            <option value="none" selected>Loading...</option>
                         </select>
                     </div>
 
                     <div class="form-group row">
-                        <label for="task">Task:</label>
+                        <label for="task">Task</label>
                         <select id="task" class="form-control">
-                            <option value="none selected" selected>Select...</option>
-                            <option value="placeholder1">Placeholder 1</option>
-                            <option value="placeholder2">Placeholder 2</option>
+                            <option value="none" selected disabled>Select...</option>
                         </select>
                     </div>
 
                     <div class="form-group row">
-                        <label for="notes">Notes:</label>
+                        <label for="notes">Notes</label>
                         <textarea id="notes" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group row justify-content-end">
-                        <button type="submit" class="btn btn-primary">Update Spreadsheet</button>
+                        <button id="submit" type="submit" disabled class="btn btn-primary">Update Spreadsheet</button>
                     </div>
                 </div>
             </form>
@@ -139,16 +134,20 @@ First, add a `Task` class (`Models/Task.cs'):
 Then, we'll add a `TaskCategory` class (`Models/TaskCategory.cs`):
 
 ```cs
+namespace TimeTrackingUpdateServer.Models
+{
     public class TaskCategory
     {
         public string name { get; }
-        public IList<Task> Tasks { get; }
+        public IList<Task> tasks { get; }
         public TaskCategory(string name, IEnumerable<Task> tasks = null)
         {
             this.name = name;
-            Tasks = new List<Task>(tasks ?? new List<Task>());
+            this.tasks = new List<Task>(tasks ?? new List<Task>());
         }
     }
+}
+
 ```
 
 One could argue we don't really need a class for `Task`, since it just consists of a single string, but this format allows us to easily add more info to
@@ -167,7 +166,6 @@ static methods for interacting with the workbook. Our first method will be `GetC
     public class TimeTrackingWorkbookService
     {
         private static string WORKBOOK_PATH = $"{Environment.CurrentDirectory}/Working_Draft_Testing_Macros.xlsm";
-        private static int PROJECTS_SHEET_INDEX = 6;
         private static char CATEGORIES_RANGE_START_COL = 'I';
         private static int CATEGORIES_RANGE_START_ROW = 22;
 
@@ -193,7 +191,7 @@ static methods for interacting with the workbook. Our first method will be `GetC
                 var task = ((Excel.Range)categoriesSheet.Cells[currentRow, columnIndex + 1]).Value.ToString();
 
                 var category = categoryMap.ContainsKey(categoryName) ? categoryMap[categoryName] : new TaskCategory(categoryName);
-                category.Tasks.Add(new Models.Task(task));
+                category.tasks.Add(new Models.Task(task));
                 categoryMap[categoryName] = category; // In case we got a defalt from GetValueOrDefault.
 
                 currentRow += 1;

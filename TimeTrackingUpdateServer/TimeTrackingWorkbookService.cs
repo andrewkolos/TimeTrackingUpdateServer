@@ -10,7 +10,6 @@ namespace TimeTrackingUpdateServer
     public class TimeTrackingWorkbookService
     {
         private static string WORKBOOK_PATH = $"{Environment.CurrentDirectory}/Working_Draft_Testing_Macros.xlsm";
-        private static int PROJECTS_SHEET_INDEX = 6;
         private static char CATEGORIES_RANGE_START_COL = 'I';
         private static int CATEGORIES_RANGE_START_ROW = 22;
 
@@ -36,7 +35,7 @@ namespace TimeTrackingUpdateServer
                 var task = ((Excel.Range)categoriesSheet.Cells[currentRow, columnIndex + 1]).Value.ToString();
 
                 var category = categoryMap.ContainsKey(categoryName) ? categoryMap[categoryName] : new TaskCategory(categoryName);
-                category.Tasks.Add(new Models.Task(task));
+                category.tasks.Add(new Models.Task(task));
                 categoryMap[categoryName] = category; // In case we got a defalt from GetValueOrDefault.
 
                 currentRow += 1;
