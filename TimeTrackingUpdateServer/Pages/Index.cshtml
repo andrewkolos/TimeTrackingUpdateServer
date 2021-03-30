@@ -6,40 +6,38 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Add Entry</h1>
 </div>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
-            <form>
-                <div id="form">
-                    <div class="form-group row">
-                        <label for="category">Category</label>
-                        <select id="category" class="form-control">
-                            <option value="none" selected>Loading...</option>
-                        </select>
-                    </div>
+            <form id="form">
+                <div class="form-group row">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control">
+                        <option value="none" selected>Loading...</option>
+                    </select>
+                </div>
 
-                    <div class="form-group row">
-                        <label for="task">Task</label>
-                        <select id="task" class="form-control">
-                            <option value="none" selected disabled>Select...</option>
-                        </select>
-                    </div>
+                <div class="form-group row">
+                    <label for="task">Task</label>
+                    <select id="task" class="form-control">
+                        <option value="none" selected disabled>Select...</option>
+                    </select>
+                </div>
 
-                    <div class="form-group row">
-                        <label for="notes">Notes</label>
-                        <textarea id="notes" class="form-control"></textarea>
-                    </div>
+                <div class="form-group row">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" class="form-control"></textarea>
+                </div>
 
-                    <div class="form-group row justify-content-end">
-                        <button id="submit" type="submit" disabled class="btn btn-primary">Update Spreadsheet</button>
-                    </div>
+                <div class="form-group row justify-content-end">
+                    <button id="submit" type="submit" disabled class="btn btn-primary">Update Spreadsheet</button>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <span id="categoryInfo" class="d-none">@JsonConvert.SerializeObject(TimeTrackingWorkbookService.GetCategories())</span>
 </div>

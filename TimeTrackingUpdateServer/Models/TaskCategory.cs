@@ -7,12 +7,12 @@ namespace TimeTrackingUpdateServer.Models
 {
     public class TaskCategory
     {
-        public string name { get; }
-        public IList<Task> tasks { get; }
+        public string Name { get; }
+        public IList<Task> Tasks { get; }
         public TaskCategory(string name, IEnumerable<Task> tasks = null)
         {
-            this.name = name;
-            this.tasks = new List<Task>(tasks ?? new List<Task>());
+            Name = name;
+            Tasks = new List<Task>(tasks ?? new List<Task>());
         }
     }
 }

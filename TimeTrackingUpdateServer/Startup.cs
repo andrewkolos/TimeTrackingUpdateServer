@@ -51,6 +51,10 @@ namespace TimeTrackingUpdateServer
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapPost("/api/addEntry", async context =>
+                {
+                    // Update Excel sheet with new task here.
+                });
                 endpoints.MapRazorPages();
             });
 

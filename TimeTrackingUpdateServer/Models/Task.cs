@@ -8,11 +8,11 @@ namespace TimeTrackingUpdateServer.Models
 {
     public class Task
     {
-        public string name { get; }
+        public string Name { get; }
 
         public Task(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
     }
 }

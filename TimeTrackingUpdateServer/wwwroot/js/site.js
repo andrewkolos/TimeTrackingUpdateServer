@@ -5,10 +5,12 @@ const categories = retrieveCategoryInfo();
 
 const categorySelect = document.getElementById("category");
 const taskSelect = document.getElementById("task");
+const notesText = document.getElementById('notes');
 const submitButton = document.getElementById('submit');
+const form = document.getElementById('form');
 
 const categoriesByName = new Map();
-categories.forEach(c => categoriesByName.set(c.name, c));
+categories.forEach(c => categoriesByName.set(c.Name, c));
 
 initForm();
 
@@ -23,16 +25,22 @@ function retrieveCategoryInfo() {
 function initForm() {
     categorySelect.options.length = 0; // clear the select
     category.options[0] = new Option('Select...', 'none');
-    taskSelect.setAttribute('disabled', '');
     categories.forEach((c, i) => {
-        categorySelect.options[i + 1] = new Option(c.name, c.name);
+        categorySelect.options[i + 1] = new Option(c.Name, c.Name);
     });
+
+    taskSelect.setAttribute('disabled', '');
+    taskSelect.selectedIndex = 0;
 }
 
 function wireEventListeners() {
     categorySelect.addEventListener('change', e => onCategorySelectionChanged(e));
     taskSelect.addEventListener('change', e => updateSubmitButtonDisabledState());
-    submitButton.addEventListener('click', e => onSubmitButtonClicked())
+    submitButton.addEventListener('click', e => onSubmitButtonClicked());
+
+    form.addEventListener('submit', e => {
+        e.preventDefault(); // Prevents default behavior, which is to reload the page.
+    });
 }
 
 function updateSubmitButtonDisabledState() {
@@ -51,8 +59,8 @@ function onCategorySelectionChanged(e) {
     taskSelect.options[0] = new Option('Select...', 'none');
     if (value != 'none') {
         const category = categoriesByName.get(value);
-        category.tasks.forEach((t, i) =>
-            taskSelect.options[i + 1] = new Option(t.name, t.name));
+        category.Tasks.forEach((t, i) =>
+            taskSelect.options[i + 1] = new Option(t.Name, t.Name));
 
     }
 
@@ -66,5 +74,23 @@ function onCategorySelectionChanged(e) {
 }
 
 function onSubmitButtonClicked() {
-    alert('Not implemented yet');
+    const category = categorySelect.value;
+    const task = categorySelect.value;
+    const notes = notesText.value;
+
+    fetch('/api/addEntry', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            category,
+            task,
+            notes,
+        }),
+    })
+        .then(response => { console.log(response); })
+        .catch(reason => { console.log(reason); });
+
+    initForm();
 }
