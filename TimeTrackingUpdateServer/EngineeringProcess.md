@@ -243,10 +243,6 @@ Next, we need get the dropdown behavior working. We need to add all the categori
 when the user selects a category. We are going to do this using JavaScript.
 
 
-#### Adding TypeScript
-We need to include the transpilation of TypeScript into JavaScript as part of our build process as the browser will not understand TypeScript.
-Follow the instructions here: [https://www.typescriptlang.org/docs/handbook/asp-net-core.html](https://www.typescriptlang.org/docs/handbook/asp-net-core.html).
-
 ### How to communicate between JS (browser) and C# (server)
 Notice how the client and server communicate over JSON (which is a common format). JSON is easy to convert to a native JS object that the browser
 can work with, but we need some middleware<sup>1</sup> to convert JSON to a C#-friendly object format and vice-versa. While we could do this ourselves,
